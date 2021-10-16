@@ -29,5 +29,5 @@ console.log(`nLands:`, nLands, `beatNumber:`, beatNumber, `nTrials:`, nTrials);
 
 const results = analysis.hittingBeatsInCommander(nLands, nTrials, beatNumber);
 console.log('\n');
-console.log('Amount of turns to hit the "beat number" (amount of mana available to you):');
+console.log('Amount of turns to hit the "beat number" (amount of lands drawn, and mana eventually available to you):');
 console.log(results);
