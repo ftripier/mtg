@@ -1,16 +1,19 @@
 const Deck = require("./deck");
 const ss = require('simple-statistics');
+const Player = require("./player");
 
 function runTrial(nLands, beatNumber) {
     let deck = Deck.fromNLands(nLands, 100);
 
     let currentTurn = 0;
-    let hand = deck.drawHand();
+    let player = new Player(deck);
+    player.drawHand();
     while (deck.hasCards()) {
+        let hand = player.hand;
         if (hand.nLands >= beatNumber) {
             return currentTurn;
         }
-        hand.drawNext();
+        player.nextTurn();
         currentTurn += 1;
     }
     return currentTurn;

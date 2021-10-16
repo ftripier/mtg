@@ -29,13 +29,19 @@ class Deck {
     }
 
     drawHand() {
-        return Hand.drawFromDeck(this);
+        const hand = new Hand(this);
+        hand.drawFromDeck();
+        return hand;
     }
 
     shuffle() {
         for (let i = 0; i < SHUFFLE_ENTROPY; i += 1) {
             random.shuffle(this._deckList);
         }
+    }
+
+    putCardsOnTop(cards) {
+        this._deckList = this._deckList.concat(cards);
     }
 
     hasCards() {
