@@ -36,6 +36,10 @@ class Hand {
     get nLands() {
         return this._cards.filter((card) => card.isLand).length;
     }
+
+    get nMulligans() {
+        return this._mulligans;
+    }
 }
 
 module.exports = Hand;

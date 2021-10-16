@@ -34,3 +34,16 @@ test('land priority strategy does not mulligan hands with more than three lands'
     strategy(hand);
     expect(mulliganSpy).not.toHaveBeenCalled();
 });
+
+test('land priority strategy mulligans at most twice if it draws insufficient lands', () => {
+    const deck = new Deck();
+    const hand = new Hand(deck);
+    jest.spyOn(hand, 'nLands', 'get').mockReturnValue(1);
+    const mulliganSpy = jest.spyOn(hand, 'mulligan');
+    const strategy = strategies.MULLIGAN.LAND_PRIORITY();
+    strategy(hand);
+    strategy(hand);
+    strategy(hand);
+    strategy(hand);
+    expect(mulliganSpy).toHaveBeenCalledTimes(2);
+});

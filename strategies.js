@@ -3,7 +3,9 @@ const MULLIGAN = {
         return (hand) => {
             let nLands = hand.nLands;
             if (nLands < landLowerBound || nLands > landUpperBound) {
-                hand.mulligan();
+                if (hand.nMulligans < 2) {
+                    hand.mulligan();
+                }
             }
         }
     }
