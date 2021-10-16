@@ -21,6 +21,20 @@ class Deck {
         return deck;
     }
 
+    static fromNLandsAndManaRamp(nLands, manaRamp, nCards) {
+        const nMana = nLands + manaRamp;
+        if (nMana > nCards) {
+            throw new Error('must have more cards than lands and mana ramp');
+        }
+        let lands = Array.from({ length: nLands }).map(() => new Card({ isLand: true, isManaRamp: false }));
+        let mr = Array.from({ length: manaRamp }).map(() => new Card({ isManaRamp: true, isLand: false }));
+        let other = Array.from({ length: nCards - nMana }).map(() => new Card({ isLand: false, isManaRamp: false }));
+        let deckList = lands.concat(mr).concat(other);
+        let deck = new Deck(deckList);
+        deck.shuffle();
+        return deck;
+    }
+
     draw() {
         if (!this.hasCards()) {
             throw new Error("no more cards");

@@ -27,6 +27,18 @@ class Hand {
         this._deck.shuffle();
     }
 
+    playCards(cardConsumer) {
+        let unusedCards = [];
+        while (this._cards.length) {
+            let card = this._cards.pop();
+            let used = cardConsumer(card);
+            if (!used) {
+                unusedCards.push(card);
+            }
+        }
+        this._cards = unusedCards;
+    }
+
     mulligan() {
         this._mulligans += 1;
         this.reshuffle();

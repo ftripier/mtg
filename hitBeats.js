@@ -17,6 +17,7 @@ function ArgParseInt(value, dummyPrevious) {
 
 program
   .option('-t, --n-trials <number>', 'the number of trials to run.', ArgParseInt, 100000)
+  .option('-mr, --mana-ramp <number>', 'the number of mana ramp permanents.', ArgParseInt, 0)
   .requiredOption('-b, --beat-number <number>', 'the target amount of mana you need to have', ArgParseInt)
   .requiredOption('-l, --n-lands <type>', 'the amount of lands in your commander deck', ArgParseInt);
 
@@ -24,10 +25,10 @@ program.parse(process.argv);
 
 const options = program.opts();
 
-const { nLands, beatNumber, nTrials } = options;
-console.log(`nLands:`, nLands, `beatNumber:`, beatNumber, `nTrials:`, nTrials);
+const { nLands, beatNumber, nTrials, manaRamp } = options;
+console.log(`nLands:`, nLands, `nManaRamp`, manaRamp, `beatNumber:`, beatNumber, `nTrials:`, nTrials);
 
-const results = analysis.hittingBeatsInCommander(nLands, nTrials, beatNumber);
+const results = analysis.hittingBeatsInCommander(nLands, nTrials, beatNumber, manaRamp);
 console.log('\n');
-console.log('Amount of turns to hit the "beat number" (amount of lands drawn, and mana eventually available to you):');
+console.log('Amount of turns to hit the "beat number" (target mana per turn)');
 console.log(results);

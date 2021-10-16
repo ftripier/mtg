@@ -2,15 +2,15 @@ const Deck = require("./deck");
 const ss = require('simple-statistics');
 const Player = require("./player");
 
-function runTrial(nLands, beatNumber) {
-    let deck = Deck.fromNLands(nLands, 100);
+function runTrial(nLands, beatNumber, manaRamp) {
+    let deck = Deck.fromNLandsAndManaRamp(nLands, manaRamp, 100);
 
     let currentTurn = 0;
     let player = new Player(deck);
     player.drawHand();
     while (deck.hasCards()) {
-        let hand = player.hand;
-        if (hand.nLands >= beatNumber) {
+        let playableMana = player.field.playableMana;
+        if (playableMana >= beatNumber) {
             return currentTurn;
         }
         player.nextTurn();
@@ -19,10 +19,10 @@ function runTrial(nLands, beatNumber) {
     return currentTurn;
 }
 
-function hittingBeatsInCommander(nLands, nTrials, beatNumber) {
+function hittingBeatsInCommander(nLands, nTrials, beatNumber, manaRamp) {
     let results = [];
     for (let i = 0; i < nTrials; i += 1) {
-        results.push(runTrial(nLands, beatNumber));
+        results.push(runTrial(nLands, beatNumber, manaRamp));
     }
     return {
         stdDev: ss.standardDeviation(results),

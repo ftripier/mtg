@@ -11,6 +11,29 @@ const MULLIGAN = {
     }
 };
 
+const PLAYSTYLE = {
+    MANA_RAMP: () => {
+        return (hand, turn) => {
+            hand.playCards((card) => {
+                if (card.isLand) {
+                    if (!turn.landPlayed) {
+                        turn.playCard(card);
+                        return true;
+                    }
+                }
+                if (card.isManaRamp) {
+                    if (turn.manaAvailable >= card.manaCost) {
+                        turn.playCard(card);
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+    }
+}
+
 module.exports = {
-    MULLIGAN
+    MULLIGAN,
+    PLAYSTYLE
 };

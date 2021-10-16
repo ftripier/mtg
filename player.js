@@ -1,7 +1,9 @@
 const strategies = require('./strategies');
+const Turn = require('./turn');
 
 const DEFAULT_STRATEGIES = {
-    mulligan: strategies.MULLIGAN.LAND_PRIORITY()
+    mulligan: strategies.MULLIGAN.LAND_PRIORITY(),
+    playstyle: strategies.PLAYSTYLE.MANA_RAMP(),
 };
 
 class Player {
@@ -9,6 +11,9 @@ class Player {
         this._strategies = {...DEFAULT_STRATEGIES, ...strategies};
         this._deck = deck;
         this._hand = null;
+        this.field = {
+            playableMana: 0
+        };
     }
 
     drawHand() {
@@ -25,6 +30,7 @@ class Player {
             this.drawHand();
         }
         this._hand.drawNext();
+        this._strategies.playstyle(this._hand, new Turn(this.field));
     }
 
     get hand() {
