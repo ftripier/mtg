@@ -19,8 +19,8 @@ class Turn {
             this._field.playableMana += 1;
         }
         if (card.isManaRamp) {
-            if (this.manaAvailable >= 2) {
-                this._manaUsed += 2;
+            if (this.manaAvailable >= card.manaCost ) {
+                this._manaUsed += card.manaCost;
                 this._field.playableMana += 1;
             } else {
                 throw new Error('not enough available to play a mana ramp');

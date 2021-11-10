@@ -19,11 +19,18 @@ function runTrial(nLands, beatNumber, manaRamp) {
     return currentTurn;
 }
 
-function hittingBeatsInCommander(nLands, nTrials, beatNumber, manaRamp) {
+function hittingBeatsInCommander(nLands, nTrials, beatNumber, manaRamp, targetTurn) {
     let results = [];
     for (let i = 0; i < nTrials; i += 1) {
         results.push(runTrial(nLands, beatNumber, manaRamp));
     }
+    let targetTurnWasHit = 0;
+    results.forEach((turnHitBeat) => {
+        if (turnHitBeat <= targetTurn) {
+            targetTurnWasHit += 1;
+        }
+    });
+    const percentageTargetTurnWasHit = targetTurnWasHit/results.length;
     const stdDev = ss.standardDeviation(results);
     const mean = ss.mean(results)
     return {
@@ -32,7 +39,8 @@ function hittingBeatsInCommander(nLands, nTrials, beatNumber, manaRamp) {
         min: ss.min(results),
         mean,
         median: ss.median(results),
-        eightyFifthPercentile: mean + stdDev
+        eightyFifthPercentile: mean + stdDev,
+        percentageTargetTurnWasHit
     }
 }
 
