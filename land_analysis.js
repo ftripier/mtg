@@ -24,12 +24,15 @@ function hittingBeatsInCommander(nLands, nTrials, beatNumber, manaRamp) {
     for (let i = 0; i < nTrials; i += 1) {
         results.push(runTrial(nLands, beatNumber, manaRamp));
     }
+    const stdDev = ss.standardDeviation(results);
+    const mean = ss.mean(results)
     return {
-        stdDev: ss.standardDeviation(results),
+        stdDev,
         max: ss.max(results),
         min: ss.min(results),
-        mean: ss.mean(results),
-        median: ss.median(results)
+        mean,
+        median: ss.median(results),
+        eightyFifthPercentile: mean + stdDev
     }
 }
 
