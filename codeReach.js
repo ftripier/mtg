@@ -30,18 +30,40 @@ function probabilityWithReplacement(nTotalObjects, nTargets, nTargetRetrievals, 
             });
         } else {
             const branchProbability = probabilityHistory.reduce((accum, currProb) => accum * currProb, 1);
-            if (probabilityOfHits[currentRetrievals] == null) {
-                probabilityOfHits[currentRetrievals] = 0;
+            const hitName = currentRetrievals === 0 ? 'none' : currentRetrievals;
+            if (probabilityOfHits[hitName] == null) {
+                probabilityOfHits[hitName] = 0;
             }
-            probabilityOfHits[currentRetrievals] += branchProbability;
+            probabilityOfHits[hitName] += branchProbability;
         }
     }
+    const anyHits = Object.entries(probabilityOfHits).reduce((accum, [hits, prob]) => {
+        if (hits === 'none') {
+            return accum;
+        }
+        return accum + prob;
+    }, 0);
+    probabilityOfHits.any = anyHits;
     return probabilityOfHits;
 }
 
 
 console.log("starting");
-const nDraws = 15;
-const nWheelHits = 1;
-const nWheels = 10;
-console.log(`probability of drawing wheel(s) in ${nDraws} draws in a deck with ${nWheels} wheels:\n`, probabilityWithReplacement(100, 10, nWheelHits, nDraws));
+
+const cases = [
+    { nDraws: 14, nWheels: 1},
+    { nDraws: 14, nWheels: 2},
+    { nDraws: 14, nWheels: 3},
+    { nDraws: 14, nWheels: 4},
+    { nDraws: 14, nWheels: 5},
+    { nDraws: 14, nWheels: 6},
+    { nDraws: 14, nWheels: 7},
+    { nDraws: 14, nWheels: 8},
+    { nDraws: 14, nWheels: 9},
+    { nDraws: 14, nWheels: 10},
+    { nDraws: 14, nWheels: 11},
+];
+
+cases.forEach(({ nDraws, nWheels}) => {
+    console.log(`probability of drawing wheel(s) in ${nDraws} draw(s) in a deck with ${nWheels} wheel(s):\n`, probabilityWithReplacement(100, nWheels, nWheels, nDraws));
+});
