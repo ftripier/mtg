@@ -8,6 +8,6 @@ A script to analyze commander decks' mana curves. For a given amount of lands, f
 
 Gives you the stdDev, mean, median, max, and min of the amount of turns it takes to draw a certain amount of lands.
 
-If you specificy a target turn, it'll also give you the percentage of the time you reached your target mana level on the target turn.
+If you specify a target turn, it'll also give you the percentage of the time you reached your target mana level on the target turn.
 
 Run `./hitBeats.js -h` to see how to run it.
